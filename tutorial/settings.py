@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-# import os
+import os
 import pymysql
 pymysql.install_as_MySQLdb()
 
@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@#_dmcn&g(&o#s0g!t$sw*z#klijckn6e%b)l-fs*zsc+6rd*c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
+    'tutorial',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,26 +81,37 @@ WSGI_APPLICATION = 'tutorial.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
+
+if not DEBUG:
+    DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # },
     'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '34.121.233.103',
+            'HOST': '10.24.224.2',
             'USER': 'root',
             'PASSWORD': '123',
             'NAME': 'blog',
         },
-    'deploy': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': 'compute-engine-practice-349917:us-central1:blog-server',
-            'USER': 'root',
-            'PASSWORD': '123',
-            'NAME': 'blog',
-        }
 }
+else:
+    DATABASES = {
+        # 'default': {
+        #     'ENGINE': 'django.db.backends.sqlite3',
+        #     'NAME': BASE_DIR / 'db.sqlite3',
+        # },
+        'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'HOST': '34.121.233.103',
+                'USER': 'root',
+                'PASSWORD': '123',
+                'NAME': 'blog',
+            },
+    }
+
+
 
 
 # Password validation
@@ -136,7 +148,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -153,3 +164,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CRISPY_TEMPLATE_PACK = "uni_form"
 STATIC_URL = '/static/'
 
+LOGIN_REDIRECT_URL = 'profile'
+
+LOGIN_URL = 'login'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

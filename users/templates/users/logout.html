@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+  <h1>Choose an option</h1>
+  <div>
+
+    <div class="border-top pt-3">
+      <small>Already Have an Account?
+        <a class="btn" href="{% url 'login' %}">Sign in</a>
+      </small>
+      <small>New User?
+        <a class="btn" href="{% url 'register' %}">Sign Up</a>
+      </small>
+    </div>
+  </div>
+
+{% endblock content %}
