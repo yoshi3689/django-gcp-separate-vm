@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView,
     CreateView,
-    DetailView
+    DetailView,
+    UpdateView,
+    DeleteView
 )
 from .models import Post
 
@@ -41,6 +43,38 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         # calling this method on the super[CreateView]
         # with the user name field filled out
         return super().form_valid(form)
+
+class PostUpdateView(LoginRequiredMixin, UpdateView,UserPassesTestMixin,):
+    model = Post
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    def test_func(self):
+        post = self.get_object
+        return self.request.user == post.author
+
+class PostUpdateView(LoginRequiredMixin, UpdateView,UserPassesTestMixin,):
+    model = Post
+    fields = ['title', 'content']
+    # success_url = f'/post/{}'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    def test_func(self):
+        post = self.get_object
+        return self.request.user == post.author
+
+class PostDeleteView(LoginRequiredMixin, DeleteView,UserPassesTestMixin,):
+    model = Post
+    # needs a destination after deletion since the page itself won;t exist anymore
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object
+        return self.request.user == post.author
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})

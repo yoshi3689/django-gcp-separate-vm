@@ -10,6 +10,11 @@
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Post</button>
+                {% if "update" in request.path %}
+                <a class="btn btn-outline-secondary" href="{% url 'post-detail' object.id %}">Cancel</a>
+                {% else %}
+                <a class="btn btn-outline-secondary" href="{% url 'blog-home' %}">Cancel</a>
+                {% endif %}
             </div>
         </form>
     </div>

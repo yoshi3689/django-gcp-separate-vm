@@ -9,4 +9,3 @@ class UsersConfig(AppConfig):
         # this is just how the django doc recommends 
         # to avoid import conflicts
         import users.signals
-        print(users.signals)

@@ -13,7 +13,10 @@ class Post(models.Model):
     def __str__(self):
         return self.title
     
+    # we have to tell django to redirect to the page below after being created
     def get_absolute_url(self):
         # return reverse("post-detail", kwargs={"pk": self.pk})
         return reverse("blog-home")
+        # reverse -- just returns the url string
+        # redirect -- actually redirect to the give url
     
