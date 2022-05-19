@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section">
       <div class="media">
@@ -16,12 +17,21 @@
         <fieldset class="form-group">
           <legend class="border-bottom mb-4">Profile</legend>
           {% comment %} render the form as a pragraph tag {% endcomment %}
-          {{ u_form }}
-          {{ i_form }}
+          {{ u_form | crispy }}
+        <br/>
+          {{ i_form.age | as_crispy_field }}
+          <br/>
+          {{ i_form.image | as_crispy_field }}
         </fieldset>
         <div class="form-group">
           <button class="btn" type="submit">Update<button>
         </div>
       </form>
     </div>
+    <a href="{% url 'two_factor:profile' %}" class="btn btn-block">
+      Strengthen your security
+    </a>
+    {% comment %} <a href="{% url 'two_factor:profile' %}" class="btn btn-block">
+      2FA profile
+    </a> {% endcomment %}
 {% endblock content %}

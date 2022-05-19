@@ -1,0 +1,10 @@
+{% load example %}
+{% load crispy_forms_tags %}
+  {{ wizard.management_form }}
+  {{ wizard.form | crispy }}
+
+  {% comment %} {% for field in wizard.form %}
+  <label class="form-label">{{field.lebel}}</label>
+  {{field | add_classes: "form-control mb-2 account-form"}}
+  {{field}}
+  {% endfor %} {% endcomment %}

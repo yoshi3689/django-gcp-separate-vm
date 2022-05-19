@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # using all the routes from those two files below
     path('', include('blog.urls')),
+    path('', include('account.urls')),
     path('', include('users.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # I need to add the below line to display an image from the media folder
